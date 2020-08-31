@@ -27,27 +27,29 @@ let vm = new Vue({
 
     核心是对比新旧节点的Children ,更新DOM,只要找同级别的子节点依次比较，然后再找下一级别的节点比较
     分为四种情况:
-    - 开始节点和结束节点比较
-    这两种情况类似oldStartVnode / newStartVnode (旧开始节点 / 新开始节点)
-    oldEndVnode / newEndVnode (旧结束节点 / 新结束节点)
 
-    如果 oldStartVnode 和 newStartVnode 是 sameVnode (key 和 sel 相同)调用 patchVnode()
-    对比和更新节点把旧开始和新开始索引往后移动  oldStartIdx++ / oldEndIdx++
-    如果oldEndVnode 和newEndVnode是相同节点 调用patchVnode()对比差异更新,把新旧结束节点索引向前移动 oldEndIdx--/newEndIdx--
-    - 旧开始节点和新的结束节点比较
-    判断是否是相同节点 调用 patchVnode() 对比和更新节点
-    将旧的开始oldStartVnode对应的DOM元素,移动到右边
-    - 比较旧的结束节点和新开始节点
-    相同调用 patchVnode() 对比和更新节点
-    把 oldEndVnode 对应的 DOM 元素，移动到左边更新索引
-    - 以上都不满足
-    遍历新节点，使用 newStartNode 的 key 在老节点数组中找相同节点
-    如果没找到,说明新的开始节点是新的,创建新的DOM元素,插入到DOM中
-    如果找到,判断新节点和找到的老节点的 sel 选择器是否相同
-        如果不相同,创建新的DOM元素,插入到DOM中
-        如果相同,把找到的DOM元素,移动到左边
-    - 如果老节点的数组先遍历完(oldStartIdx > oldEndIdx)，说明新节点有剩余，把剩余节点批量插入到右边
-    - 如果新节点的数组先遍历完(newStartIdx > newEndIdx)，说明老节点有剩余，把剩余节点批量删除
+- 开始节点和结束节点比较
+  这两种情况类似 oldStartVnode / newStartVnode (旧开始节点 / 新开始节点)
+  oldEndVnode / newEndVnode (旧结束节点 / 新结束节点)
+
+  如果 oldStartVnode 和 newStartVnode 是 sameVnode (key 和 sel 相同)调用 patchVnode()
+  对比和更新节点把旧开始和新开始索引往后移动 oldStartIdx++ / oldEndIdx++
+  如果 oldEndVnode 和 newEndVnode 是相同节点 调用 patchVnode()对比差异更新,把新旧结束节点索引向前移动 oldEndIdx--/newEndIdx--
+
+- 旧开始节点和新的结束节点比较
+  判断是否是相同节点 调用 patchVnode() 对比和更新节点
+  将旧的开始 oldStartVnode 对应的 DOM 元素,移动到右边
+- 比较旧的结束节点和新开始节点
+  相同调用 patchVnode() 对比和更新节点
+  把 oldEndVnode 对应的 DOM 元素，移动到左边更新索引
+- 以上都不满足
+  遍历新节点，使用 newStartNode 的 key 在老节点数组中找相同节点
+  如果没找到,说明新的开始节点是新的,创建新的 DOM 元素,插入到 DOM 中
+  如果找到,判断新节点和找到的老节点的 sel 选择器是否相同
+  如果不相同,创建新的 DOM 元素,插入到 DOM 中
+  如果相同,把找到的 DOM 元素,移动到左边
+- 如果老节点的数组先遍历完(oldStartIdx > oldEndIdx)，说明新节点有剩余，把剩余节点批量插入到右边
+- 如果新节点的数组先遍历完(newStartIdx > newEndIdx)，说明老节点有剩余，把剩余节点批量删除
 
 二、编程题
 
